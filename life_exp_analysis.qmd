@@ -13,4 +13,22 @@ library(tidyverse)
 
 Here, I re-examine the analysis of Oeppen and Vaupel (2002).
 
-# Analysis 
+# Life Expectancy Analysis 
+
+```{r}
+lif_exp<- gapminder::gapminder_unfiltered
+lif_exp
+```
+
+```{r}
+sumdat <- lif_exp %>%
+  group_by(year)%>%
+  filter(lifeExp == max (lifeExp, na.rm = TRUE)) %>%
+  select(year,country,lifeExp)%>%
+  arrange(year)%>%
+  ungroup()%>%
+
+print(sumdat)
+         
+  
+```
