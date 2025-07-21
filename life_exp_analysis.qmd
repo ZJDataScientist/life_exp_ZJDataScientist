@@ -7,13 +7,14 @@ date: today
 
 ```{r}
 library(tidyverse)
+library(ggplot2)
 ```
 
 # Abstract
 
 Here, I re-examine the analysis of Oeppen and Vaupel (2002).
 
-# Life Expectancy Analysis 
+# Life Expectancy Analysis
 
 Here is the code to organize the data for analysis
 
@@ -34,3 +35,26 @@ print(sumdat)
          
   
 ```
+
+```{r}
+mean_life_exp <- lif_exp %>%
+  group_by(country) %>%
+  summarise(mean_lifeExp = mean(lifeExp, na.rm = TRUE)) %>%
+  arrange(desc(mean_lifeExp))
+```
+
+```{r}
+mean_life_exp %>%
+  slice_max(mean_lifeExp, n = 20) %>%
+  ggplot(aes(x = reorder(country, mean_lifeExp), y = mean_lifeExp)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Top 20 Countries by Average Life Expectancy",
+    x = "Country",
+    y = "Mean Life Expectancy"
+  ) +
+  theme_minimal()
+```
+
+Martinique and Guadeloupe are the two countries with the highest life expectancy among the top 20.
