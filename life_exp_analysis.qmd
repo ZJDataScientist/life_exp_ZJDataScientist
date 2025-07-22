@@ -37,13 +37,6 @@ print(sumdat)
 ```
 
 ```{r}
-mean_life_exp <- lif_exp %>%
-  group_by(country) %>%
-  summarise(mean_lifeExp = mean(lifeExp, na.rm = TRUE)) %>%
-  arrange(desc(mean_lifeExp))
-```
-
-```{r}
 mean_life_exp %>%
   slice_max(mean_lifeExp, n = 20) %>%
   ggplot(aes(x = reorder(country, mean_lifeExp), y = mean_lifeExp)) +
